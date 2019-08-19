@@ -24,6 +24,11 @@ const Form = styled.form`
     min-width: 0;
     border: 1px solid rgb(202, 189, 166);
     border-radius: 5px;
+    outline: 0;
+    
+    &.invalid{
+      border-color: rgb(202,3,77);
+    }
   }
   
   button{
@@ -79,6 +84,11 @@ class App extends React.Component{
     this.inputRef = React.createRef()
   }
 
+  componentDidMount() {
+    this.inputRef.current.select()
+
+  }
+
   setInput = (e) => {
     this.setState({
       currentInput: e.target.value,
@@ -101,7 +111,7 @@ class App extends React.Component{
   render = () => (
     <Main>
       <Form onSubmit={this.state.inputValid && this.roll}>
-        <input value={this.state.currentInput} ref={this.inputRef} onChange={this.setInput} />
+        <input className={this.state.inputValid ? 'valid' : 'invalid'} value={this.state.currentInput} ref={this.inputRef} onChange={this.setInput} />
         <button disabled={!this.state.inputValid}>roll</button>
       </Form>
       <Results>{this.state.rolls.map((roll, i) =>(
